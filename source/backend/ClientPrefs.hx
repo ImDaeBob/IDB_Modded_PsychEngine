@@ -20,9 +20,15 @@ import states.TitleState;
 	public var splashAlpha:Float = 0.6;
 	public var lowQuality:Bool = false;
 	public var shaders:Bool = true;
+<<<<<<< Updated upstream
 	public var cacheOnGPU:Bool = #if !switch false #else true #end; // GPU Caching made by Raltyro
 	public var framerate:Int = 60;
+=======
+	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
+	public var framerate:Int = 120;
+>>>>>>> Stashed changes
 	public var camZooms:Bool = true;
+	public var noteTop:Bool = false;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;
 	public var arrowRGB:Array<Array<FlxColor>> = [

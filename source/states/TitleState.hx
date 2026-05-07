@@ -24,8 +24,8 @@ typedef TitleData =
 	var titley:Float;
 	var startx:Float;
 	var starty:Float;
-	var gfx:Float;
-	var gfy:Float;
+	var spry:Float;
+	var sprx:Float;
 	var backgroundSprite:String;
 	var bpm:Float;
 	
@@ -56,6 +56,7 @@ class TitleState extends MusicBeatState
 
 	var wackyImage:FlxSprite;
 
+<<<<<<< Updated upstream
 	#if TITLE_SCREEN_EASTER_EGG
 	final easterEggKeys:Array<String> = [
 		'SHADOW', 'RIVEREN', 'BBPANZU', 'PESSY'
@@ -63,6 +64,11 @@ class TitleState extends MusicBeatState
 	final allowedKeys:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	var easterEggKeysBuffer:String = '';
 	#end
+=======
+	var mustUpdate:Bool = false;
+
+	public static var updateVersion:String = '';
+>>>>>>> Stashed changes
 
 	override public function create():Void
 	{
@@ -212,7 +218,7 @@ class TitleState extends MusicBeatState
 	}
 
 	// JSON data
-	var characterImage:String = 'gfDanceTitle';
+	var characterImage:String = 'danceTitle';
 	var animationName:String = 'gfDance';
 
 	var gfPosition:FlxPoint = FlxPoint.get(512, 40);
@@ -226,15 +232,15 @@ class TitleState extends MusicBeatState
 
 	function loadJsonData()
 	{
-		if(Paths.fileExists('images/gfDanceTitle.json', TEXT))
+		if(Paths.fileExists('images/danceTitle.json', TEXT))
 		{
-			var titleRaw:String = Paths.getTextFromFile('images/gfDanceTitle.json');
+			var titleRaw:String = Paths.getTextFromFile('images/danceTitle.json');
 			if(titleRaw != null && titleRaw.length > 0)
 			{
 				try
 				{
 					var titleJSON:TitleData = tjson.TJSON.parse(titleRaw);
-					gfPosition.set(titleJSON.gfx, titleJSON.gfy);
+					gfPosition.set(titleJSON.sprx, titleJSON.spry);
 					logoPosition.set(titleJSON.titlex, titleJSON.titley);
 					enterPosition.set(titleJSON.startx, titleJSON.starty);
 					musicBPM = titleJSON.bpm;
@@ -259,41 +265,6 @@ class TitleState extends MusicBeatState
 			else trace('[WARN] No Title JSON detected, using default values.');
 		}
 		//else trace('[WARN] No Title JSON detected, using default values.');
-	}
-
-	function easterEggData()
-	{
-		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
-		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
-		switch(easterEgg.toUpperCase())
-		{
-			case 'SHADOW':
-				characterImage = 'ShadowBump';
-				animationName = 'Shadow Title Bump';
-				gfPosition.x += 210;
-				gfPosition.y += 40;
-				useIdle = true;
-			case 'RIVEREN':
-				characterImage = 'ZRiverBump';
-				animationName = 'River Title Bump';
-				gfPosition.x += 180;
-				gfPosition.y += 40;
-				useIdle = true;
-			case 'BBPANZU':
-				characterImage = 'BBBump';
-				animationName = 'BB Title Bump';
-				danceLeftFrames = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
-				danceRightFrames = [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-				gfPosition.x += 45;
-				gfPosition.y += 100;
-			case 'PESSY':
-				characterImage = 'PessyBump';
-				animationName = 'Pessy Title Bump';
-				gfPosition.x += 165;
-				gfPosition.y += 60;
-				danceLeftFrames = [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-				danceRightFrames = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
-		}
 	}
 
 	function getIntroTextShit():Array<Array<String>>
@@ -356,8 +327,6 @@ class TitleState extends MusicBeatState
 			if (titleTimer > 2) titleTimer -= 2;
 		}
 
-		// EASTER EGG
-
 		if (initialized && !transitioning && skippedIntro)
 		{
 			if (newTitle && !pressedEnter)
@@ -392,58 +361,6 @@ class TitleState extends MusicBeatState
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
-			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
-			{
-				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
-				var keyName:String = Std.string(keyPressed);
-				if(allowedKeys.contains(keyName)) {
-					easterEggKeysBuffer += keyName;
-					if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
-					//trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
-
-					for (wordRaw in easterEggKeys)
-					{
-						var word:String = wordRaw.toUpperCase(); //just for being sure you're doing it right
-						if (easterEggKeysBuffer.contains(word))
-						{
-							//trace('YOOO! ' + word);
-							if (FlxG.save.data.psychDevsEasterEgg == word)
-								FlxG.save.data.psychDevsEasterEgg = '';
-							else
-								FlxG.save.data.psychDevsEasterEgg = word;
-							FlxG.save.flush();
-
-							FlxG.sound.play(Paths.sound('secret'));
-
-							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(1, 1, FlxColor.BLACK);
-							black.scale.set(FlxG.width, FlxG.height);
-							black.updateHitbox();
-							black.alpha = 0;
-							add(black);
-
-							FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
-								function(twn:FlxTween) {
-									FlxTransitionableState.skipNextTransIn = true;
-									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState());
-								}
-							});
-							FlxG.sound.music.fadeOut();
-							if(FreeplayState.vocals != null)
-							{
-								FreeplayState.vocals.fadeOut();
-							}
-							closedState = true;
-							transitioning = true;
-							playJingle = true;
-							easterEggKeysBuffer = '';
-							break;
-						}
-					}
-				}
-			}
-			#end
 		}
 
 		if (initialized && pressedEnter && !skippedIntro)
@@ -561,19 +478,15 @@ class TitleState extends MusicBeatState
 	}
 
 	var skippedIntro:Bool = false;
-	var increaseVolume:Bool = false;
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
 		{
-			#if TITLE_SCREEN_EASTER_EGG
-			if (playJingle) //Ignore deez
-			{
-				playJingle = false;
-				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
-				if (easteregg == null) easteregg = '';
-				easteregg = easteregg.toUpperCase();
+			remove(ngSpr);
+			remove(credGroup);
+			FlxG.camera.flash(FlxColor.WHITE, 4);
 
+<<<<<<< Updated upstream
 				var sound:FlxSound = null;
 				switch(easteregg)
 				{
@@ -643,6 +556,8 @@ class TitleState extends MusicBeatState
 				}
 				#end
 			}
+=======
+>>>>>>> Stashed changes
 			skippedIntro = true;
 		}
 	}

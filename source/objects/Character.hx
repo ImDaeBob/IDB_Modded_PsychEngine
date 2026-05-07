@@ -10,7 +10,6 @@ import openfl.utils.Assets;
 import haxe.Json;
 
 import backend.Song;
-import states.stages.objects.TankmenBG;
 
 typedef CharacterFile = {
 	var animations:Array<AnimArray>;
@@ -91,15 +90,6 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 		changeCharacter(character);
 		
-		switch(curCharacter)
-		{
-			case 'pico-speaker':
-				skipDance = true;
-				loadMappedAnims();
-				playAnim("shoot1");
-			case 'pico-blazin', 'darnell-blazin':
-				skipDance = true;
-		}
 	}
 
 	public function changeCharacter(character:String)
@@ -419,7 +409,6 @@ class Character extends FlxSprite
 					for (songNotes in section.sectionNotes)
 						animationNotes.push(songNotes);
 
-			TankmenBG.animationNotes = animationNotes;
 			animationNotes.sort(sortAnims);
 		}
 		catch(e:Dynamic) {}

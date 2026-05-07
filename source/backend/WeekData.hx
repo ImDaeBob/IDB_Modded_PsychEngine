@@ -21,9 +21,10 @@ typedef WeekFile =
 }
 
 class WeekData {
+	public var folder:String = '';
+	
 	public static var weeksLoaded:Map<String, WeekData> = new Map<String, WeekData>();
 	public static var weeksList:Array<String> = [];
-	public var folder:String = '';
 
 	// JSON variables
 	public var songs:Array<Dynamic>;
@@ -139,6 +140,7 @@ class WeekData {
 
 	private static function addWeek(weekToCheck:String, path:String, directory:String, i:Int, originalLength:Int)
 	{
+		//Check for StoryMode & Freeplay
 		if(!weeksLoaded.exists(weekToCheck))
 		{
 			var week:WeekFile = getWeekFile(path);
@@ -158,6 +160,7 @@ class WeekData {
 				}
 			}
 		}
+
 	}
 
 	private static function getWeekFile(path:String):WeekFile {

@@ -1810,6 +1810,7 @@ class FunkinLua {
 		#if (!flash && sys)
 		if(runtimeShaders.exists(name))
 		{
+<<<<<<< Updated upstream
 			var shaderData:Array<String> = runtimeShaders.get(name);
 			if(shaderData != null && (shaderData[0] != null || shaderData[1] != null))
 			{
@@ -1856,7 +1857,12 @@ class FunkinLua {
 					return true;
 				}
 			}
+=======
+			luaTrace('Shader $name was already initialized!');
+			return true;
+>>>>>>> Stashed changes
 		}
+		
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);

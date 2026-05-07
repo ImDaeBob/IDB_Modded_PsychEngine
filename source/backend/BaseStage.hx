@@ -167,7 +167,9 @@ class BaseStage extends FlxBasic
 	}
 	
 	inline private function get_camGame():FlxCamera return game.camGame;
+	inline private function get_camCredits():FlxCamera return game.camCredits;
 	inline private function get_camHUD():FlxCamera return game.camHUD;
+	inline private function get_camNote():FlxCamera return game.camNote;
 	inline private function get_camOther():FlxCamera return game.camOther;
 
 	inline private function get_defaultCamZoom():Float return game.defaultCamZoom;

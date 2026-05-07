@@ -59,9 +59,9 @@ class Song
 	public var disableNoteRGB:Bool = false;
 	public var speed:Float = 1;
 	public var stage:String;
-	public var player1:String = 'bf';
-	public var player2:String = 'dad';
-	public var gfVersion:String = 'gf';
+	public var player1:String = 'BF';
+	public var player2:String = 'Opp';
+	public var gfVersion:String = 'GF';
 	public var format:String = 'psych_v1';
 
 	public static function convert(songJson:Dynamic) // Convert old charts to psych_v1 format
