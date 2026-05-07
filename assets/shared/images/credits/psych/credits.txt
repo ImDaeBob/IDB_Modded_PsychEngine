@@ -1,0 +1,20 @@
+[ Psych Engine Team ]
+Shadow Mario||shadowmario||444444||Main Programmer and Head of Psych Engine||https://ko-fi.com/shadowmario
+Riveren||riveren||14967B||Main Artist/Animator of Psych Engine||https://x.com/riverennn
+||
+[ Former Engine Members ]
+bb-panzu||bb||3E813A||Ex-Programmer of Psych Engine||https://x.com/bbsub3
+||
+[ Engine Contributors ]
+crowplexus||crowplexus||CFCFCF||HScript Iris, Input System v3, and Other PRs||https://github.com/crowplexus
+Kamizeta||kamizeta||D21C11||Creator of Pessy, Psych Engine's mascot.||https://www.instagram.com/cewweey/
+MaxNeton||maxneton||3C2E4E||Loading Screen Easter Egg Artist/Animator.||https://bsky.app/profile/maxneton.bsky.social
+Keoiki||keoiki||D2D2D2||Note Splash Animations and Latin Alphabet||https://x.com/Keoiki_
+SqirraRNG||sqirra||E1843A||Crash Handler and Base code for\nChart Editor's Waveform||https://x.com/gedehari
+EliteMasterEric||mastereric||FFBD40||Runtime Shaders support and Other PRs||https://x.com/EliteMasterEric
+MAJigsaw77||majigsaw||5F5F5F||.MP4 Video Loader Library (hxvlc)||https://x.com/MAJigsaw77
+Tahir Toprak Karabekiroglu||tahir||A04397||Note Splash Editor and Other PRs||https://x.com/TahirKarabekir
+iFlicky||flicky||9E29CF||Composer of Psync and Tea Time\nAnd some sound effects||https://x.com/flicky_i
+KadeDev||kade||64A250||Fixed some issues on Chart Editor and Other PRs||https://x.com/kade0912
+superpowers04||superpowers04||B957ED||LUA JIT Fork||https://x.com/superpowers04
+CheemsAndFriends||cheems||E1E1E1||Creator of FlxAnimate||https://x.com/CheemsnFriendos
