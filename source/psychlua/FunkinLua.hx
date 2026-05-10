@@ -191,6 +191,7 @@ class FunkinLua {
 		set('cameraZoomOnBeat', ClientPrefs.data.camZooms);
 		set('flashingLights', ClientPrefs.data.flashing);
 		set('noteOffset', ClientPrefs.data.noteOffset);
+		set('noteTop', ClientPrefs.data.noteTop);
 		set('healthBarAlpha', ClientPrefs.data.healthBarAlpha);
 		set('noResetButton', ClientPrefs.data.noReset);
 		set('lowQuality', ClientPrefs.data.lowQuality);
@@ -1810,7 +1811,7 @@ class FunkinLua {
 		#if (!flash && sys)
 		if(runtimeShaders.exists(name))
 		{
-<<<<<<< Updated upstream
+
 			var shaderData:Array<String> = runtimeShaders.get(name);
 			if(shaderData != null && (shaderData[0] != null || shaderData[1] != null))
 			{
@@ -1857,10 +1858,8 @@ class FunkinLua {
 					return true;
 				}
 			}
-=======
 			luaTrace('Shader $name was already initialized!');
 			return true;
->>>>>>> Stashed changes
 		}
 		
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);

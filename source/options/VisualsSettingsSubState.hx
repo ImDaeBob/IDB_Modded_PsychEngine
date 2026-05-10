@@ -79,6 +79,12 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = playNoteSplashes;
 
+		var option:Option = new Option('Notes Prioritised',
+			'If checked, notes will appear in front of HUD elements instead of behind.',
+			'noteTop',
+			'bool');
+		addOption(option);
+		
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',
