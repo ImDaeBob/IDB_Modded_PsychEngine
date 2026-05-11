@@ -31,6 +31,7 @@ import substates.GameOverSubstate;
 
 #if !flash
 import openfl.filters.ShaderFilter;
+import openfl.filters.BitmapFilter;
 #end
 
 import shaders.ErrorHandledShader;
@@ -57,7 +58,7 @@ import crowplexus.hscript.Printer;
 import shaders.ChromaticAberrationShader;
 import shaders.AuraChromAbberation;
 import shaders.CutGlitchShader;
-import shaders.Godrays_Bright;
+import shaders.Godrays;
 
 /**
  * This is where all the Gameplay stuff happens and is managed
@@ -166,7 +167,7 @@ class PlayState extends MusicBeatState
 	public var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	// public var strumLineNotes:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
+	public var strumLineNotes:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var opponentStrums:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var playerStrums:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var grpOppNoteSplashes:FlxTypedGroup<NoteSplash> = new FlxTypedGroup<NoteSplash>();
@@ -307,7 +308,7 @@ class PlayState extends MusicBeatState
 	public var glitchSpeed:Float = 0;
 
 	var rbBit = new Array<BitmapFilter>();
-	public static var rb:GR_Bright;
+	public static var rb:Godrays;
 	public var rbPos:Array<Float> = [0, 0];
 	public var rbIntensity:Float = 0.4;
 	public var rbDecay:Float = 1.0;
@@ -522,12 +523,12 @@ class PlayState extends MusicBeatState
 		comboGroup = new FlxSpriteGroup();
 		oppNoteGroup = new FlxTypedGroup<FlxBasic>();
 		bfNoteGroup = new FlxTypedGroup<FlxBasic>();
-		// noteGroup = new FlxTypedGroup<FlxBasic>();
+		noteGroup = new FlxTypedGroup<FlxBasic>();
 		add(comboGroup);
 		add(uiGroup);
 		add(oppNoteGroup);
 		add(bfNoteGroup);		
-		// add(noteGroup);
+		add(noteGroup);
 
 		Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
@@ -548,7 +549,7 @@ class PlayState extends MusicBeatState
 		uiGroup.add(timeBar);
 		uiGroup.add(timeTxt);
 
-		// noteGroup.add(strumLineNotes);
+		noteGroup.add(strumLineNotes);
 		oppNoteGroup.add(opponentStrums);
 		bfNoteGroup.add(playerStrums);
 
