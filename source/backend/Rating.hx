@@ -42,7 +42,7 @@ class Rating
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
-		var rating:Rating = new Rating('crap');
+		var rating:Rating = new Rating('shit');
 		rating.ratingMod = 0;
 		rating.score = 50;
 		rating.noteSplash = false;

@@ -167,7 +167,7 @@ class PlayState extends MusicBeatState
 	public var camFollow:FlxObject;
 	private static var prevCamFollow:FlxObject;
 
-	public var strumLineNotes:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
+	// public var strumLineNotes:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var opponentStrums:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var playerStrums:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var grpOppNoteSplashes:FlxTypedGroup<NoteSplash> = new FlxTypedGroup<NoteSplash>();
@@ -409,6 +409,8 @@ class PlayState extends MusicBeatState
 		else if (stageData.isPixelStage == true) //Backward compatibility
 			stageUI = "pixel";
 
+		getShadersList = stageData.shaders; // Retrieve Shaders
+		
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
 		GF_X = stageData.girlfriend[0];
@@ -523,12 +525,12 @@ class PlayState extends MusicBeatState
 		comboGroup = new FlxSpriteGroup();
 		oppNoteGroup = new FlxTypedGroup<FlxBasic>();
 		bfNoteGroup = new FlxTypedGroup<FlxBasic>();
-		noteGroup = new FlxTypedGroup<FlxBasic>();
+		// noteGroup = new FlxTypedGroup<FlxBasic>();
 		add(comboGroup);
 		add(uiGroup);
 		add(oppNoteGroup);
 		add(bfNoteGroup);		
-		add(noteGroup);
+		// add(noteGroup);
 
 		Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
@@ -549,7 +551,7 @@ class PlayState extends MusicBeatState
 		uiGroup.add(timeBar);
 		uiGroup.add(timeTxt);
 
-		noteGroup.add(strumLineNotes);
+		// noteGroup.add(strumLineNotes);
 		oppNoteGroup.add(opponentStrums);
 		bfNoteGroup.add(playerStrums);
 
@@ -741,7 +743,7 @@ class PlayState extends MusicBeatState
 			////////////////////////////////////////////////////////////     
 			if (shader == "bright_rays")
 			{     
-				rb = new GR_Bright();
+				rb = new Godrays();
 				rbBit.push(new ShaderFilter(rb.shader));
 
 				camGame.setFilters(rbBit);
@@ -754,7 +756,7 @@ class PlayState extends MusicBeatState
 		callOnScripts('onCreatePost');
 		
 		var splash:NoteSplash = new NoteSplash();
-		grpNoteSplashes.add(splash);
+		grpOppNoteSplashes.add(splash);
 		splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
 
 		super.create();
@@ -1208,7 +1210,7 @@ class PlayState extends MusicBeatState
 
 		spr.screenCenter();
 		spr.antialiasing = antialias;
-		insert(members.indexOf(noteGroup), spr);
+		insert(members.indexOf(oppNoteGroup), spr);
 		FlxTween.tween(spr, {/*y: spr.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 			ease: FlxEase.cubeInOut,
 			onComplete: function(twn:FlxTween)
@@ -1722,10 +1724,16 @@ class PlayState extends MusicBeatState
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
+				if (OppStrumsInGame)
+				{
+					babyArrow.scale.x = babyArrow.scale.x + OppStrumsSetting[0];
+					babyArrow.scale.y = babyArrow.scale.y + OppStrumsSetting[1];
+					babyArrow.scrollFactor.set(OppStrumsSetting[2], OppStrumsSetting[3]);
+				}
 				opponentStrums.add(babyArrow);
 			}
 
-			strumLineNotes.add(babyArrow);
+			// strumLineNotes.add(babyArrow);
 			babyArrow.playerPosition();
 		}
 	}
@@ -3379,10 +3387,10 @@ class PlayState extends MusicBeatState
 	public function spawnNoteSplashOnNote(instigator:Int = 1, note:Note) {
 		if(note != null) 
 		{
-			var strum:StrumNote = (instgator == 1) ? playerStrums.members[note.noteData] : opponentStrums.members[note.noteData];
+			var strum:StrumNote = (instigator == 1) ? playerStrums.members[note.noteData] : opponentStrums.members[note.noteData];
 			if(strum != null)
 			{
-				var splash:NoteSplash = (instgator == 1) ? grpBFNoteSplashes.recycle(NoteSplash) : grpOppNoteSplashes.recycle(NoteSplash);
+				var splash:NoteSplash = (instigator == 1) ? grpBFNoteSplashes.recycle(NoteSplash) : grpOppNoteSplashes.recycle(NoteSplash);
 				splash.babyArrow = strum;
 				splash.spawnSplashNote(strum.x, strum.y, note.noteData, note);
 

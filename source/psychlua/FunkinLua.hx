@@ -1704,7 +1704,13 @@ class FunkinLua {
 	{
 		if(PlayState.instance == null) return null;
 
-		var strumNote:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+		var strumLineNotes:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
+		for (strum in PlayState.instance.opponentStrums.members)
+			if (strum != null) strumLineNotes.add(strum);
+		for (strum in PlayState.instance.playerStrums.members)
+			if (strum != null) strumLineNotes.add(strum);
+
+		var strumNote:StrumNote = strumLineNotes.members[note % strumLineNotes.length];
 		if(strumNote == null) return null;
 
 		if(tag != null)
