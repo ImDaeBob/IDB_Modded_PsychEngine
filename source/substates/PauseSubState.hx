@@ -8,6 +8,7 @@ import flixel.util.FlxStringUtil;
 
 import states.StoryMenuState;
 import states.FreeplayState;
+import states.MainMenuState;
 import options.OptionsState;
 
 class PauseSubState extends MusicBeatSubstate
@@ -323,7 +324,11 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.canResync = false;
 					Mods.loadTopMod();
 					if(PlayState.isStoryMode)
-						MusicBeatState.switchState(new StoryMenuState());
+						#if HAS_STORYMODE 
+							MusicBeatState.switchState(new StoryMenuState());
+						#else
+							MusicBeatState.switchState(new MainMenuState());
+						#end				
 					else
 						MusicBeatState.switchState(new FreeplayState());
 

@@ -363,13 +363,14 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
+	function createCoolText(textArray:Array<String>, ?offsetX:Float = 0, ?offsetY:Float = 0)
 	{
 		for (i in 0...textArray.length)
 		{
 			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
 			money.screenCenter(X);
-			money.y += (i * 60) + 200 + offset;
+			money.x += offsetX;
+			money.y += (i * 60) + 200 + offsetY;
 			if(credGroup != null && textGroup != null)
 			{
 				credGroup.add(money);
@@ -378,12 +379,13 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	function addMoreText(text:String, ?offset:Float = 0)
+	function addMoreText(text:String, ?offsetX:Float = 0, ?offsetY:Float = 0)
 	{
 		if(textGroup != null && credGroup != null) {
 			var coolText:Alphabet = new Alphabet(0, 0, text, true);
 			coolText.screenCenter(X);
-			coolText.y += (textGroup.length * 60) + 200 + offset;
+			coolText.x += offsetX;
+			coolText.y += (textGroup.length * 60) + 200 + offsetY;
 			credGroup.add(coolText);
 			textGroup.add(coolText);
 		}
@@ -430,16 +432,16 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					createCoolText(['Psych Engine by'], 40);
+					createCoolText(['Psych Engine by'], 0, 40);
 				case 4:
-					addMoreText('Shadow Mario', 40);
-					addMoreText('Riveren', 40);
+					addMoreText('Shadow Mario', 0, 40);
+					addMoreText('Riveren', 0, 40);
 				case 5:
 					deleteCoolText();
 				case 6:
-					createCoolText(['Not associated', 'with'], -40);
+					createCoolText(['Not associated', 'with'], 0, -40);
 				case 8:
-					addMoreText('newgrounds', -40);
+					addMoreText('newgrounds', 0, -40);
 					ngSpr.visible = true;
 				case 9:
 					deleteCoolText();
@@ -447,15 +449,15 @@ class TitleState extends MusicBeatState
 				case 10:
 					createCoolText([curWacky[0]]);
 				case 12:
-					addMoreText(curWacky[1]);
+					addMoreText(curWacky[1], 0, 5);
 				case 13:
 					deleteCoolText();
 				case 14:
-					addMoreText('Friday');
+					addMoreText('Friday', 0, 10);
 				case 15:
-					addMoreText('Night');
+					addMoreText('Night', 0, 15);
 				case 16:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('Funkin', 0, 20);
 
 				case 17:
 					skipIntro();

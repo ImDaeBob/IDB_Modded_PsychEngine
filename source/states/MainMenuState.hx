@@ -6,6 +6,9 @@ import lime.app.Application;
 import states.editors.MasterEditorMenu;
 import options.OptionsState;
 
+import backend.WeekData;
+import backend.Song;
+
 enum MainMenuColumn {
 	LEFT;
 	CENTER;
@@ -25,7 +28,11 @@ class MainMenuState extends MusicBeatState
 
 	//Centered/Text options
 	var optionShit:Array<String> = [
-		'story_mode',
+		#if HAS_STORYMODE 
+			'story_mode', 
+		#else 
+			'play',
+		#end
 		'freeplay',
 		#if MODS_ALLOWED 'mods', #end
 		'credits'
@@ -293,11 +300,35 @@ class MainMenuState extends MusicBeatState
 				{
 					switch (option)
 					{
+						case 'play':
+							persistentUpdate = false;
+
+							WeekData.reloadWeekFiles(true);
+							for (weekId in WeekData.weeksList)
+							{
+							    var week = WeekData.weeksLoaded.get(weekId);
+							    if (week != null && week.weekName.toLowerCase() == "")
+							    {
+							        WeekData.setDirectoryFromWeek(week);
+									PlayState.storyPlaylist = [for (song in week.songs) song[0]];
+							        break;
+							    }
+							}
+							PlayState.isStoryMode = true;
+
+							PlayState.storyDifficulty = 0; 
+							Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase());
+							PlayState.campaignScore = 0;
+							PlayState.campaignMisses = 0;
+
+							LoadingState.prepareToSong();
+							LoadingState.loadAndSwitchState(new PlayState(), true);
+							#if !SHOW_LOADING_SCREEN FlxG.sound.music.stop(); #end
 						case 'story_mode':
 							MusicBeatState.switchState(new StoryMenuState());
 						case 'freeplay':
 							MusicBeatState.switchState(new FreeplayState());
-
+							
 						#if MODS_ALLOWED
 						case 'mods':
 							MusicBeatState.switchState(new ModsMenuState());

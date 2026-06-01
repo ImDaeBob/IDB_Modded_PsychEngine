@@ -284,7 +284,7 @@ class PlayState extends MusicBeatState
 	// Opponent's UI Setting
 	public var OppSplash:Bool = true;
 	public var OppStrumsInGame:Bool = false;
-	public var OppStrumsSetting:Array<Float> = [0.0, 0.0, 1.0, 1.0]; //ScaleX, ScaleY, OffsetX, OffsetY
+	public var OppStrumsSetting:Array<Float> = [1.0, 1.0]; //ScrollX, ScrollY
 
 	// Shader stuffs
 	private var getShadersList:Array<String> = [];
@@ -1528,11 +1528,7 @@ class PlayState extends MusicBeatState
 				if (!swagNote.mustPress)
 				{
 					if (OppStrumsInGame)
-					{
-						swagNote.scale.x = swagNote.scale.x + OppStrumsSetting[0];
-						swagNote.scale.y = swagNote.scale.y + OppStrumsSetting[1];
-						swagNote.scrollFactor.set(OppStrumsSetting[2], OppStrumsSetting[3]);
-					}
+						swagNote.scrollFactor.set(OppStrumsSetting[0], OppStrumsSetting[1]);
 					oppNoteGroup.add(swagNote);
 				}
 				else
@@ -1558,12 +1554,7 @@ class PlayState extends MusicBeatState
 						if (!sustainNote.mustPress)
 						{
 							if (OppStrumsInGame)
-							{
-								sustainNote.scale.x = sustainNote.scale.x + OppStrumsSetting[0];
-								sustainNote.scale.y = sustainNote.scale.y + OppStrumsSetting[1];
-								sustainNote.y -= OppStrumsSetting[1] * sustainNote.height;
-								sustainNote.scrollFactor.set(OppStrumsSetting[2], OppStrumsSetting[3]);
-							}
+								sustainNote.scrollFactor.set(OppStrumsSetting[0], OppStrumsSetting[1]);
 							oppNoteGroup.add(sustainNote);
 						}
 						else
@@ -1725,11 +1716,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 				if (OppStrumsInGame)
-				{
-					babyArrow.scale.x = babyArrow.scale.x + OppStrumsSetting[0];
-					babyArrow.scale.y = babyArrow.scale.y + OppStrumsSetting[1];
-					babyArrow.scrollFactor.set(OppStrumsSetting[2], OppStrumsSetting[3]);
-				}
+					babyArrow.scrollFactor.set(OppStrumsSetting[0], OppStrumsSetting[1]);
 				opponentStrums.add(babyArrow);
 			}
 
@@ -2709,7 +2696,11 @@ class PlayState extends MusicBeatState
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
 					canResync = false;
-					MusicBeatState.switchState(new StoryMenuState());
+					#if HAS_STORYMODE 
+						MusicBeatState.switchState(new StoryMenuState());
+					#else
+						MusicBeatState.switchState(new MainMenuState());
+					#end				
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice') && !ClientPrefs.getGameplaySetting('botplay')) {
@@ -3399,11 +3390,7 @@ class PlayState extends MusicBeatState
 				else
 				{
 					if (OppStrumsInGame)
-					{
-						splash.scale.x = splash.scale.x + OppStrumsSetting[0];
-						splash.scale.y = splash.scale.y + OppStrumsSetting[1];
-						splash.scrollFactor.set(OppStrumsSetting[2], OppStrumsSetting[3]);
-					}
+						splash.scrollFactor.set(OppStrumsSetting[0], OppStrumsSetting[1]);
 					grpOppNoteSplashes.add(splash);
 				}
 			}
